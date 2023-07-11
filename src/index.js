@@ -1,10 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
+import { createRoot } from "react-dom/client";
+import { HashRouter } from "react-router-dom";
 
 
 import App from './components/app';
 
 import './styles.scss';
 
-const wrapper = document.getElementById('container');
-wrapper ? ReactDOM.render(<App />, wrapper) : false;
+
+const root = createRoot(document.getElementById("container"));
+root.render(
+<HashRouter><App /></HashRouter>);

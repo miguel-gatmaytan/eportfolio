@@ -1,27 +1,33 @@
-import React from 'react';
-import { Router, Route, Switch } from 'react-router-dom';
+import * as React from "react";
+import { Route, Routes, Outlet } from "react-router-dom";
 
-import History from 'util/history';
-import Classic from 'modules/classic';
-import LandingPage from 'modules/landing-page';
-import Interactive from 'modules/interactive';
+import Classic from "modules/classic";
+import LandingPage from "modules/landing-page";
+import Interactive from "modules/interactive";
 
-import Overlay from './components/Overlay';
-import AppContainer from './components/AppContainer';
+import Overlay from "./components/Overlay";
+import AppContainer from "./components/AppContainer";
 
-export const App = () => (
-  <AppContainer>
-    <Overlay />
-    <Router history={History}>
-      <Switch>
-        <Route path="/interactive/:section" component={Interactive} />
-        <Route path="/interactive" component={Interactive} />
-        <Route path="/classic/:section" component={Classic} />
-        <Route path="/classic" component={Classic} />
-        <Route path="/" component={LandingPage} />
-      </Switch>
-    </Router>
-  </AppContainer>
-);
+function Layout() {
+  return (
+    <AppContainer>
+      <Overlay />
+      <Outlet />
+    </AppContainer>
+  );
+}
+export const App = () => {
+  return (
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<LandingPage />} />
+        <Route path="interactive/:section" element={<Interactive />} />
+        <Route path="interactive" element={<Interactive/>} />
+        <Route path="classic/:section" element={<Classic/>} />
+        <Route path="classic" element={<Classic/>} />
+      </Route>
+    </Routes>
+  );
+};
 
 export default App;
