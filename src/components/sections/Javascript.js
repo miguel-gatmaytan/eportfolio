@@ -4,36 +4,45 @@ import { Table } from 'semantic-ui-react';
 
 const { Row, Body, Cell, Header, HeaderCell } = Table;
 
-const ROW_COUNT = 7; //Hard coded for now.
+const ROW_COUNT = 10; //Hard coded for now.
 
 const GOLD_TIER = [
   'React',
+  'React Router',
   'Redux',
   'Redux Saga',
+  'ESLint',
   'Webpack',
   'Babel',
   'Sass',
   'Less',
+  'Storybook',
 ];
 
 const SILVER_TIER = [
+  'TypeScript',
+  'CSS in JS',
   'JEST',
   'NodeJS',
   'Express',
-  'Axios',
   'EmotionJS',
   'PlotlyJS',
   'MomentJS',
+  'Chromatic',
+  'BlueprintJS',
 ];
 
 const BRONZE_TIER = [
-  'BlueprintJS',
+  'Web Accessibility',
   'MaterialUI',
   'SemanticUI',
   'AGGrid',
-  'OpenFIN',
+  'Plotly / Highcharts',
   'Lodash',
   'RollupJS',
+  'NextJS',
+  'Jenkins',
+  'Apollo + GraphQL'
 ];
 
 const ROWS = [];

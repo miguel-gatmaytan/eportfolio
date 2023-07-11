@@ -24,8 +24,16 @@ html {
         padding-top: 20px;
       }
     }
+    tr {
+      &:first-child {
+         td {
+          padding-top: 14px;
+         }
+      }
+    }
     td {
       text-align: center;
+      padding: 3px;
     }
   }
 }
