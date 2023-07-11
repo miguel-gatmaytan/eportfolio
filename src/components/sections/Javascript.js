@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { SubHeader } from 'components/headers';
 import { Table } from 'semantic-ui-react';
 

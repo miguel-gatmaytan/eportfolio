@@ -1,8 +1,8 @@
-import React from 'react';
+import * as React from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import Logo from 'components/Logo';
-import History from 'util/history';
 import SECTIONS from 'constants/sections';
 import Container from 'components/Container';
 import { MainHeader } from 'components/headers';
@@ -10,105 +10,86 @@ import { Bio, Contact, Javascript } from 'components/sections';
 
 import Menu from './components/Menu';
 
-export class Classic extends React.Component {
-  onBackButtonClick = () => {
-    History.push('/');
+export const Classic = () => {
+
+  const [loaded, setLoaded] = React.useState(false);
+  const [header, setHeader] = React.useState(<div>LOADING CLASSIC VIEW..</div>);
+  const [finishedAnimating, setFinishedAnimating] = React.useState(false);
+  
+  let navigate = useNavigate();
+  let params = useParams();
+
+  const onBackButtonClick = () => {
+    navigate('/');
   };
-  onBioButtonClick = () => {
-    History.push('/classic/bio');
+  const onBioButtonClick = () => {
+    navigate('/classic/bio');
   };
-  onSkillsButtonClick = () => {
-    History.push('/classic/skills');
+  const onSkillsButtonClick = () => {
+    navigate('/classic/skills');
   };
-  onContactButtonClick = () => {
-    History.push('/classic/contact');
+  const onContactButtonClick = () => {
+    navigate('/classic/contact');
   };
 
-  fireAnimation = () => {
+  const listenForEsc = (e) => {
+    if (e.key === 'Escape') {
+      onBackButtonClick();
+    }
+  };
+  
+  React.useEffect(() => {
+    document.addEventListener('keyup', listenForEsc);
     setTimeout(() => {
-      this.setState({ loaded: true, finishedAnimating: false }, () => {
-        setTimeout(() => {
-          this.setState({
-            header: <div>Hello, I&apos;m Miguel.</div>,
-            finishedAnimating: true,
-          });
-        }, 1000);
-      });
+      setLoaded(true);
+      setTimeout(() => {
+        setHeader(<div>Hello, I&apos;m Miguel.</div>);
+        setFinishedAnimating(true);
+      }, 1000);
     }, 1000);
-  };
 
-  get urlParams() {
-    return this.props.match.params;
-  }
+    return () => {
+      document.removeEventListener('keyup', listenForEsc);
+    }
+  }, []);
 
-  get activeSection() {
-    switch (this.urlParams.section) {
+  const activeSection = () => {
+    switch (params.section) {
       case SECTIONS.BIO:
-        return <Bio onContactButtonClick={this.onContactButtonClick} />;
+        return <Bio onContactButtonClick={onContactButtonClick} />;
       case SECTIONS.CONTACT:
         return <Contact />;
       case SECTIONS.SKILLS:
         return <Javascript />;
       default:
-        return <Bio onContactButtonClick={this.onContactButtonClick} />;
+        return <Bio onContactButtonClick={onContactButtonClick} />;
     }
   }
 
-  listenForEsc = (e) => {
-    if (e.key === 'Escape') {
-      this.onBackButtonClick();
-    }
-  };
 
-  addKeyListeners = () => {
-    document.addEventListener('keyup', this.listenForEsc);
-  };
-
-  removeKeyListeners = () => {
-    document.removeEventListener('keyup', this.listenForEsc);
-  };
-
-  render() {
     return (
       <Container
         style={{
-          marginTop: !this.state.loaded ? '33vh' : '50px',
-          height: !this.state.loaded ? 'calc(100% - 33vh)' : 'calc(100% - 50px)',
+          marginTop: !loaded ? '33vh' : '50px',
+          height: !loaded ? 'calc(100% - 33vh)' : 'calc(100% - 50px)',
         }}
       >
         <Logo />
         <MainHeader style={{ margin: 0, height: 50 }}>
-          {this.state.header}
+          {header}
         </MainHeader>
-        {this.state.finishedAnimating && (
+        {finishedAnimating && (
           <Menu
-            onBackButtonClick={this.onBackButtonClick}
-            onBioButtonClick={this.onBioButtonClick}
-            onSkillsButtonClick={this.onSkillsButtonClick}
-            onContactButtonClick={this.onContactButtonClick}
-            currentSection={this.urlParams.section || SECTIONS.BIO} //bio is the default section.
+            onBackButtonClick={onBackButtonClick}
+            onBioButtonClick={onBioButtonClick}
+            onSkillsButtonClick={onSkillsButtonClick}
+            onContactButtonClick={onContactButtonClick}
+            currentSection={params.section || SECTIONS.BIO} //bio is the default section.
           />
         )}
-        {this.state.finishedAnimating && <div>{this.activeSection}</div>}
+        {finishedAnimating && <div>{activeSection()}</div>}
       </Container>
     );
-  }
-
-  componentDidMount() {
-    this.fireAnimation();
-
-    this.addKeyListeners();
-  }
-
-  componentWillUnmount() {
-    this.removeKeyListeners();
-  }
-
-  state = {
-    loaded: false,
-    header: <div>LOADING CLASSIC VIEW..</div>,
-    finishedAnimating: false,
-  };
 }
 
 Classic.propTypes = {

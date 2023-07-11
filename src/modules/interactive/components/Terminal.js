@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import TerminalComponent from 'react-console-emulator';
 
@@ -6,14 +6,13 @@ const TERMINAL_INPUT_STYLE = {
   height: 16,
 };
 
-export class Terminal extends Component {
-  get commands() {
-    return {
+export const Terminal = (props) => {
+ const commands = {
       bio: {
         description: '[MG] - Show stuff about me!',
         usage: '',
         fn: () => {
-          this.props.onBioButtonClick();
+          props.onBioButtonClick();
           return 'Success!';
         },
       },
@@ -21,7 +20,7 @@ export class Terminal extends Component {
         description: '[MG] - Show my capabilities!',
         usage: '',
         fn: () => {
-          this.props.onSkillsButtonClick();
+          props.onSkillsButtonClick();
           return 'Success!';
         },
       },
@@ -29,26 +28,23 @@ export class Terminal extends Component {
         description: '[MG] - Show my contact info!',
         usage: '',
         fn: () => {
-          this.props.onContactButtonClick();
+          props.onContactButtonClick();
           return 'Success!';
         },
       },
     };
-  }
 
-  terminalRef = (element) => {
-    this.terminal = element;
-    this.props.terminalRef && this.props.terminalRef(element);
+  let terminalRef = (element) => {
+    props.terminalRef.current = element;
   };
 
-  render() {
-    //Declared in render to allow constant retrieving of this.props.style.
+    //Declared in render to allow constant retrieving of props.style.
     const TERMINAL_STYLE = {
       height: '40%',
       width: '100%',
       opacity: 0.9,
       textAlign: 'left',
-      ...this.props.style,
+      ...props.style,
     };
 
     return (
@@ -56,16 +52,15 @@ export class Terminal extends Component {
         autoFocus
         style={TERMINAL_STYLE}
         inputStyle={TERMINAL_INPUT_STYLE}
-        commands={this.commands}
+        commands={commands}
         ignoreCommandCase
         welcomeMessage={`Gatmaytan Miguel [Version 27.0.1] 
           \n (c) 2020 Gatmaytan Corporation. All Rights reserved. 
           \n Type 'help' for a list of commands.`}
         promptLabel={'$'}
-        ref={this.terminalRef}
+        ref={terminalRef}
       />
     );
-  }
 }
 
 Terminal.propTypes = {

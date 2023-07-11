@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { TagCloud } from 'react-tagcloud';
 
 import Sparta from 'assets/img/sparta.png';
