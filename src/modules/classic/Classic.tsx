@@ -31,7 +31,7 @@ export const Classic = () => {
     navigate('/classic/contact');
   };
 
-  const listenForEsc = (e) => {
+  const listenForEsc = (e: KeyboardEvent) => {
     if (e.key === 'Escape') {
       onBackButtonClick();
     }
