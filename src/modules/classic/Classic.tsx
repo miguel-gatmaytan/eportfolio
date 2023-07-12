@@ -5,7 +5,7 @@ import Logo from 'components/Logo';
 import SECTIONS from 'constants/sections';
 import Container from 'components/Container';
 import { MainHeader } from 'components/headers';
-import { Bio, Contact, Javascript } from 'components/sections';
+import { Bio, Contact, Javascript, Works } from 'components/sections';
 
 import Menu from './components/Menu';
 
@@ -20,15 +20,9 @@ export const Classic = () => {
   const onBackButtonClick = () => {
     navigate('/');
   };
-  const onBioButtonClick = () => {
-    navigate('/classic/bio');
-  };
-  const onSkillsButtonClick = () => {
-    navigate('/classic/skills');
-  };
-  const onContactButtonClick = () => {
-    navigate('/classic/contact');
-  };
+  const onSectionClick = (section: string) => {
+    navigate(`/classic/${section}`);
+  }
 
   const listenForEsc = (e: KeyboardEvent) => {
     if (e.key === 'Escape') {
@@ -59,13 +53,15 @@ export const Classic = () => {
   const getActiveSection = () => {
     switch (params.section) {
       case SECTIONS.BIO:
-        return <Bio onContactButtonClick={onContactButtonClick} />;
+        return <Bio onContactButtonClick={() => onSectionClick(SECTIONS.CONTACT)} />;
       case SECTIONS.CONTACT:
         return <Contact />;
       case SECTIONS.SKILLS:
         return <Javascript />;
+      case SECTIONS.WORKS:
+        return <Works />;
       default:
-        return <Bio onContactButtonClick={onContactButtonClick} />;
+        return <Bio onContactButtonClick={() => onSectionClick(SECTIONS.CONTACT)} />;
     }
   }
 
@@ -84,9 +80,7 @@ export const Classic = () => {
         {finishedAnimating && (
           <Menu
             onBackButtonClick={onBackButtonClick}
-            onBioButtonClick={onBioButtonClick}
-            onSkillsButtonClick={onSkillsButtonClick}
-            onContactButtonClick={onContactButtonClick}
+            onSectionClick={onSectionClick}
             currentSection={params.section || SECTIONS.BIO} //bio is the default section.
           />
         )}
