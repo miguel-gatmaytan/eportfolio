@@ -1,9 +1,8 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import { SubHeader } from 'components/headers';
 
-export const Bio = (props) => (
+export const Bio = (props: { onContactButtonClick: () => void; }) => (
   <div style={{ color: '#f6f6f6', textAlign: 'center' }}>
     <SubHeader style={{ marginTop: 50 }}>BIOGRAPHY</SubHeader>
     <h5 style={{ margin: 15 }}>Frontend Engineer | BCIT Alumni | Craftsman</h5>
@@ -23,9 +22,5 @@ export const Bio = (props) => (
     </div>
   </div>
 );
-
-Bio.propTypes = {
-  onContactButtonClick: PropTypes.func.isRequired
-}
 
 export default Bio;
