@@ -21,15 +21,16 @@ const StyledButton = styled.a`
     opacity: 1;
     color: white;
   }
-  &:focus {
+  &:focus, &.active {
     opacity: 1;
   }
 `;
 
-export const Button = (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
+export const Button = (props: React.AnchorHTMLAttributes<HTMLAnchorElement> & { active?: boolean }) => (
   <StyledButton
     //Note to self.. without the href, pressing enter on a focused anchor does not trigger onclick in React.
     href="javascript:;"
+    className={props.active ? 'active' : ''}
     {...props}
   />
 );

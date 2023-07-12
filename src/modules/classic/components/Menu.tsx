@@ -16,27 +16,27 @@ export const Menu = (props: {
     </Button>
     <Button
       onClick={props.onBioButtonClick}
+      active={props.currentSection === SECTIONS.BIO}
       style={{
         marginRight: 25,
-        opacity: props.currentSection === SECTIONS.BIO ? 1 : 0.6,
       }}
     >
       BIO
     </Button>
     <Button
       onClick={props.onSkillsButtonClick}
+      active={props.currentSection === SECTIONS.SKILLS}
       style={{
         marginRight: 25,
-        opacity: props.currentSection === SECTIONS.SKILLS ? 1 : 0.6,
       }}
     >
       SKILLS
     </Button>
     <Button
       onClick={props.onContactButtonClick}
+      active={props.currentSection === SECTIONS.CONTACT}
       style={{
         marginRight: 25,
-        opacity: props.currentSection === SECTIONS.CONTACT ? 1 : 0.6,
       }}
     >
       CONTACT
