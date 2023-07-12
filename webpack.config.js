@@ -20,6 +20,7 @@ module.exports = {
           },
         ],
       },
+      { test: /\.([cm]?ts|tsx)$/, loader: "ts-loader" },
       {
         test: /\.(png|jpe?g|gif|svg)$/i,
         use: [
@@ -74,6 +75,7 @@ module.exports = {
       modules: path.resolve(__dirname, 'src/modules'),
       util: path.resolve(__dirname, 'src/util'),
     },
+    extensions: [".ts", ".tsx", ".js", ".jsx"]
   },
   plugins: [
     new CleanWebpackPlugin(),
