@@ -45,7 +45,7 @@ const BRONZE_TIER = [
   'Apollo + GraphQL'
 ];
 
-const ROWS = [];
+const ROWS: Array<React.ReactNode> = [];
 
 for (let i = 0; i < ROW_COUNT; i++) {
   ROWS.push(

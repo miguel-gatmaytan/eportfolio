@@ -26,7 +26,7 @@ const StyledButton = styled.a`
   }
 `;
 
-export const Button = (props) => (
+export const Button = (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
   <StyledButton
     //Note to self.. without the href, pressing enter on a focused anchor does not trigger onclick in React.
     href="javascript:;"

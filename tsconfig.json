@@ -2,8 +2,10 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+    "assets/*": ["./src/assets/*"],
       "components/*": ["./src/components/*"],
-      "constants/*": ["./src/constants/*"]
+      "constants/*": ["./src/constants/*"],
+      "modules/*": ["./src/modules/*"]
     },
     "outDir": "./dist/",
     "noImplicitAny": true,
@@ -14,5 +16,5 @@
     "moduleResolution": "node",
     "sourceMap": true
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*", "./types/*"]
 }
