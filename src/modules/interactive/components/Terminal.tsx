@@ -1,4 +1,5 @@
 import * as React from "react";
+import { SECTIONS } from "constants/sections";
 
 /* @ts-ignore -- Console Emulator does not have a types.d.ts file, will ignore this for now. */
 import TerminalComponent from "react-console-emulator";
@@ -8,9 +9,7 @@ const TERMINAL_INPUT_STYLE = {
 };
 
 export const Terminal = (props: {
-  onBioButtonClick: () => void;
-  onSkillsButtonClick: () => void;
-  onContactButtonClick: () => void;
+  onSectionClick: (section: string) => void;
   terminalRef: React.Ref<any>;
   style: React.CSSProperties;
 }) => {
@@ -19,7 +18,7 @@ export const Terminal = (props: {
       description: "[MG] - Show stuff about me!",
       usage: "",
       fn: () => {
-        props.onBioButtonClick();
+        props.onSectionClick(SECTIONS.BIO);
         return "Success!";
       },
     },
@@ -27,7 +26,7 @@ export const Terminal = (props: {
       description: "[MG] - Show my capabilities!",
       usage: "",
       fn: () => {
-        props.onSkillsButtonClick();
+        props.onSectionClick(SECTIONS.SKILLS);
         return "Success!";
       },
     },
@@ -35,7 +34,15 @@ export const Terminal = (props: {
       description: "[MG] - Show my contact info!",
       usage: "",
       fn: () => {
-        props.onContactButtonClick();
+        props.onSectionClick(SECTIONS.CONTACT);
+        return "Success!";
+      },
+    },
+    works: {
+      description: "[MG] - Show my recent projects!",
+      usage: "",
+      fn: () => {
+        props.onSectionClick(SECTIONS.WORKS);
         return "Success!";
       },
     },

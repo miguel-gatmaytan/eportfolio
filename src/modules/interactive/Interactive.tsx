@@ -5,22 +5,19 @@ import Button from "components/Button";
 import SECTIONS from "constants/sections";
 import Container from "components/Container";
 import { MainHeader } from "components/headers";
-import { Bio, Contact, Javascript } from "components/sections";
+import { Bio, Contact, Javascript, Works } from "components/sections";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Terminal from "./components/Terminal";
 
 export const Interactive = () => {
   const navigate = useNavigate();
+  const params = useParams();
 
-  const activeSectionRef = React.useRef(null);
   const terminal = React.useRef<any>(null); // any type for now since terminal doesn't return a type for us.
+  const paramsRef = React.useRef<string>(null);
 
-  const [activeSection, _setActiveSection] = React.useState(null);
-  const setActiveSection = (section: string) => {
-    activeSectionRef.current = section;
-    _setActiveSection(section);
-  };
+  const [terminalOpen, setTerminalOpen] = React.useState(!params.section);
   const [loaded, setLoaded] = React.useState(false);
   const [header, setHeader] = React.useState(
     <div>LOADING INTERACTIVE VIEW..</div>
@@ -36,7 +33,9 @@ export const Interactive = () => {
   };
 
   const retrieveTerminal = () => {
-    setActiveSection(null);
+    setTerminalOpen(true);
+
+    navigate("/interactive");
 
     /* 
       TODO@MG: This is in a timeout, because on mobile, if the back button is clicked, 
@@ -51,21 +50,14 @@ export const Interactive = () => {
     navigate("/");
   };
 
-  const onBioButtonClick = () => {
-    setActiveSection("bio");
-  };
-
-  const onSkillsButtonClick = () => {
-    setActiveSection("skills");
-  };
-
-  const onContactButtonClick = () => {
-    setActiveSection("contact");
+  const onSectionClick = (section: string) => {
+    navigate(`/interactive/${section}`);
+    setTerminalOpen(false);
   };
 
   const listenForEsc = (e: KeyboardEvent) => {
     if (e.key === "Escape") {
-      if (activeSectionRef.current) {
+      if (paramsRef.current) {
         retrieveTerminal();
       } else {
         onBackButtonClick(); // We're assuming the user has gotten used to ESC key to go back. So send to home :)
@@ -104,34 +96,40 @@ export const Interactive = () => {
     };
   }, []);
 
+  React.useEffect(() => {
+    paramsRef.current = params.section;
+  }, [params.section]);
+
   const getActiveSection = () => {
-    switch (activeSection) {
+    switch (params.section) {
       case SECTIONS.BIO:
-        return <Bio onContactButtonClick={onContactButtonClick} />;
+        return (
+          <Bio onContactButtonClick={() => onSectionClick(SECTIONS.CONTACT)} />
+        );
       case SECTIONS.CONTACT:
         return <Contact />;
       case SECTIONS.SKILLS:
         return <Javascript />;
+      case SECTIONS.WORKS:
+        return <Works hideBackButton />;
       default:
         return null;
     }
   };
 
-  const backToHomeButton = !activeSection && finishedAnimating && (
+  const backToHomeButton = terminalOpen && finishedAnimating && (
     <Button onClick={onBackButtonClick}>BACK TO HOME</Button>
   );
 
-  const backToTerminalButton = activeSection && (
+  const backToTerminalButton = finishedAnimating && !terminalOpen && (
     <Button onClick={retrieveTerminal}>{backToTerminalMsg}</Button>
   );
 
   const terminalComponent = finishedAnimating && (
     <Terminal
-      style={{ display: activeSection ? "none" : "block" }}
+      style={{ display: terminalOpen && !params.section ? "block" : "none" }}
       terminalRef={terminalRef}
-      onBioButtonClick={onBioButtonClick}
-      onSkillsButtonClick={onSkillsButtonClick}
-      onContactButtonClick={onContactButtonClick}
+      onSectionClick={onSectionClick}
     />
   );
 
@@ -145,7 +143,7 @@ export const Interactive = () => {
       <Logo />
       <MainHeader style={{ margin: 0, height: 50 }}>{header}</MainHeader>
       {terminalComponent}
-      {getActiveSection()}
+      {finishedAnimating && getActiveSection()}
       {backToHomeButton}
       {backToTerminalButton}
     </Container>

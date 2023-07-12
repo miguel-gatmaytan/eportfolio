@@ -1,19 +1,19 @@
-const path = require('path');
+const path = require("path");
 
-const HtmlWebPackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const HtmlWebPackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
-  entry: ['./src'],
+  entry: ["./src"],
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: [
-          'babel-loader',
+          "babel-loader",
           {
-            loader: 'eslint-loader',
+            loader: "eslint-loader",
             options: {
               cache: true,
             },
@@ -25,10 +25,10 @@ module.exports = {
         test: /\.(png|jpe?g|gif|svg)$/i,
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
             options: {
-              outputPath: 'images',
-              name: '[name].[ext]',
+              outputPath: "images",
+              name: "[name].[ext]",
             },
           },
         ],
@@ -37,10 +37,10 @@ module.exports = {
         test: /\.(woff(2)?|ttf|eot)$/i,
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
             options: {
-              outputPath: 'fonts',
-              name: '[name].[ext]',
+              outputPath: "fonts",
+              name: "[name].[ext]",
             },
           },
         ],
@@ -49,17 +49,17 @@ module.exports = {
         test: /\.html$/,
         use: [
           {
-            loader: 'html-loader',
+            loader: "html-loader",
           },
         ],
       },
       {
         test: /\.s[ac]ss$/i,
-        use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader',
-        ],
+        use: ["style-loader", "css-loader", "sass-loader"],
+      },
+      {
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"],
       },
     ],
   },
@@ -69,19 +69,19 @@ module.exports = {
   },
   resolve: {
     alias: {
-      assets: path.resolve(__dirname, 'src/assets/'),
-      components: path.resolve(__dirname, 'src/components'),
-      constants: path.resolve(__dirname, 'src/constants'),
-      modules: path.resolve(__dirname, 'src/modules'),
-      util: path.resolve(__dirname, 'src/util'),
+      assets: path.resolve(__dirname, "src/assets/"),
+      components: path.resolve(__dirname, "src/components"),
+      constants: path.resolve(__dirname, "src/constants"),
+      modules: path.resolve(__dirname, "src/modules"),
+      util: path.resolve(__dirname, "src/util"),
     },
-    extensions: [".ts", ".tsx", ".js", ".jsx"]
+    extensions: [".ts", ".tsx", ".js", ".jsx"],
   },
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebPackPlugin({
-      template: './src/index.html',
-      filename: './index.html',
+      template: "./src/index.html",
+      filename: "./index.html",
     }),
   ],
 };

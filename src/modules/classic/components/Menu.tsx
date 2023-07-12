@@ -1,21 +1,18 @@
 import * as React from "react";
 
+import { Icon } from 'semantic-ui-react';
 import Button from "components/Button";
 import SECTIONS from "constants/sections";
 
 export const Menu = (props: {
+  onSectionClick: (section: string) => void;
   onBackButtonClick: () => void;
-  onBioButtonClick: () => void;
-  onSkillsButtonClick: () => void;
-  onContactButtonClick: () => void;
   currentSection: string;
 }) => (
   <div style={{ marginTop: 50 }}>
-    <Button onClick={props.onBackButtonClick} style={{ marginRight: 25 }}>
-      BACK
-    </Button>
+  <Icon name="arrow left" size="large"onClick={props.onBackButtonClick} style={{ marginRight: 25, cursor: 'pointer' }}/>
     <Button
-      onClick={props.onBioButtonClick}
+      onClick={() => props.onSectionClick(SECTIONS.BIO)}
       active={props.currentSection === SECTIONS.BIO}
       style={{
         marginRight: 25,
@@ -24,7 +21,7 @@ export const Menu = (props: {
       BIO
     </Button>
     <Button
-      onClick={props.onSkillsButtonClick}
+      onClick={() => props.onSectionClick(SECTIONS.SKILLS)}
       active={props.currentSection === SECTIONS.SKILLS}
       style={{
         marginRight: 25,
@@ -33,7 +30,16 @@ export const Menu = (props: {
       SKILLS
     </Button>
     <Button
-      onClick={props.onContactButtonClick}
+      onClick={() => props.onSectionClick(SECTIONS.WORKS)}
+      active={props.currentSection === SECTIONS.WORKS}
+      style={{
+        marginRight: 25,
+      }}
+    >
+      WORKS
+    </Button>
+    <Button
+      onClick={() => props.onSectionClick(SECTIONS.CONTACT)}
       active={props.currentSection === SECTIONS.CONTACT}
       style={{
         marginRight: 25,

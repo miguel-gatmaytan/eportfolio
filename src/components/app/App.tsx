@@ -21,10 +21,14 @@ export const App = () => {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<LandingPage />} />
-        <Route path="interactive/:section" element={<Interactive />} />
-        <Route path="interactive" element={<Interactive/>} />
-        <Route path="classic/:section" element={<Classic/>} />
-        <Route path="classic" element={<Classic/>} />
+        <Route path="interactive" element={<Interactive />}>
+          <Route path=":section" element={<Interactive />} />
+          <Route path=":section/:work" element={<Interactive />} />
+        </Route>
+        <Route path="classic" element={<Classic />}>
+          <Route path=":section" element={<Classic />} />
+          <Route path=":section/:work" element={<Classic />} />
+        </Route>
       </Route>
     </Routes>
   );
