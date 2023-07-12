@@ -1,5 +1,4 @@
 import * as React from "react";
-import PropTypes from "prop-types";
 
 import Logo from "components/Logo";
 import Button from "components/Button";
@@ -17,8 +16,9 @@ export const Interactive = () => {
 
   const [activeSection, _setActiveSection] = React.useState(null);
   const activeSectionRef = React.useRef(activeSection);
-  const terminal = React.useRef(null);
-  const setActiveSection = (section) => {
+  const terminal = React.useRef<any>(null); // any type for now since terminal doesn't return a type for us.
+  
+  const setActiveSection = (section: string) => {
     activeSectionRef.current = section;
     _setActiveSection(section);
   };
@@ -30,6 +30,10 @@ export const Interactive = () => {
     'CLICK TO GO BACK TO TERMINAL OR PRESS "ESC"'
   );
   const [finishedAnimating, setFinishedAnimating] = React.useState(false);
+
+  const terminalRef = (element: { focusTerminal: () => void; }) => {
+    terminal.current = element;
+  }
 
   const retrieveTerminal = () => {
     setActiveSection(null);
@@ -59,7 +63,7 @@ export const Interactive = () => {
     setActiveSection("contact");
   };
 
-  const listenForEsc = (e) => {
+  const listenForEsc = (e: KeyboardEvent) => {
     if (e.key === "Escape") {
       if (activeSectionRef.current) {
         retrieveTerminal();
@@ -120,7 +124,7 @@ export const Interactive = () => {
   const terminalComponent = finishedAnimating && (
     <Terminal
       style={{ display: activeSection ? "none" : "block" }}
-      terminalRef={terminal}
+      terminalRef={terminalRef}
       onBioButtonClick={onBioButtonClick}
       onSkillsButtonClick={onSkillsButtonClick}
       onContactButtonClick={onContactButtonClick}
@@ -142,10 +146,6 @@ export const Interactive = () => {
       {backToTerminalButton}
     </Container>
   );
-};
-
-Interactive.propTypes = {
-  match: PropTypes.object,
 };
 
 export default Interactive;
