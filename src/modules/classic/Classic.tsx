@@ -10,13 +10,12 @@ import { Bio, Contact, Javascript } from 'components/sections';
 import Menu from './components/Menu';
 
 export const Classic = () => {
+  const navigate = useNavigate();
+  const params = useParams();
 
   const [loaded, setLoaded] = React.useState(false);
   const [header, setHeader] = React.useState(<div>LOADING CLASSIC VIEW..</div>);
   const [finishedAnimating, setFinishedAnimating] = React.useState(false);
-  
-  let navigate = useNavigate();
-  let params = useParams();
 
   const onBackButtonClick = () => {
     navigate('/');
@@ -37,8 +36,7 @@ export const Classic = () => {
     }
   };
   
-  React.useEffect(() => {
-    document.addEventListener('keyup', listenForEsc);
+  const animateHeader = () => {
     setTimeout(() => {
       setLoaded(true);
       setTimeout(() => {
@@ -46,13 +44,19 @@ export const Classic = () => {
         setFinishedAnimating(true);
       }, 1000);
     }, 1000);
+  };
+
+  React.useEffect(() => {
+    document.addEventListener('keyup', listenForEsc);
+
+    animateHeader();
 
     return () => {
       document.removeEventListener('keyup', listenForEsc);
     }
   }, []);
 
-  const activeSection = () => {
+  const getActiveSection = () => {
     switch (params.section) {
       case SECTIONS.BIO:
         return <Bio onContactButtonClick={onContactButtonClick} />;
@@ -86,7 +90,7 @@ export const Classic = () => {
             currentSection={params.section || SECTIONS.BIO} //bio is the default section.
           />
         )}
-        {finishedAnimating && <div>{activeSection()}</div>}
+        {finishedAnimating && getActiveSection()}
       </Container>
     );
 }

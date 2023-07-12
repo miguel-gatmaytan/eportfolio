@@ -12,12 +12,11 @@ import Terminal from "./components/Terminal";
 
 export const Interactive = () => {
   const navigate = useNavigate();
-  
+
+  const activeSectionRef = React.useRef(null);
+  const terminal = React.useRef<any>(null); // any type for now since terminal doesn't return a type for us.
 
   const [activeSection, _setActiveSection] = React.useState(null);
-  const activeSectionRef = React.useRef(activeSection);
-  const terminal = React.useRef<any>(null); // any type for now since terminal doesn't return a type for us.
-  
   const setActiveSection = (section: string) => {
     activeSectionRef.current = section;
     _setActiveSection(section);
@@ -31,9 +30,10 @@ export const Interactive = () => {
   );
   const [finishedAnimating, setFinishedAnimating] = React.useState(false);
 
-  const terminalRef = (element: { focusTerminal: () => void; }) => {
+  const terminalRef = (element: any) => {
+    // Again, any for now as terminal component doesn't provide us with any type.
     terminal.current = element;
-  }
+  };
 
   const retrieveTerminal = () => {
     setActiveSection(null);
@@ -84,9 +84,7 @@ export const Interactive = () => {
     }
   };
 
-  React.useEffect(() => {
-    document.addEventListener("keyup", listenForEsc);
-    performMobileCheck();
+  const animateHeader = () => {
     setTimeout(() => {
       setLoaded(true);
       setTimeout(() => {
@@ -94,6 +92,12 @@ export const Interactive = () => {
         setFinishedAnimating(true);
       }, 1000);
     }, 1000);
+  };
+
+  React.useEffect(() => {
+    document.addEventListener("keyup", listenForEsc);
+    performMobileCheck();
+    animateHeader();
 
     return () => {
       document.removeEventListener("keyup", listenForEsc);

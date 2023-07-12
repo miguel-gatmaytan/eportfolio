@@ -7,6 +7,7 @@ import App from "./components/app";
 import "./styles.scss";
 
 const root = createRoot(document.getElementById("container"));
+
 root.render(
   <HashRouter>
     <App />
