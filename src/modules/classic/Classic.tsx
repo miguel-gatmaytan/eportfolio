@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import Logo from 'components/Logo';
 import SECTIONS from 'constants/sections';
@@ -91,9 +90,5 @@ export const Classic = () => {
       </Container>
     );
 }
-
-Classic.propTypes = {
-  match: PropTypes.object,
-};
 
 export default Classic;
